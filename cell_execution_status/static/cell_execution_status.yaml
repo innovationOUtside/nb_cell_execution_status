@@ -21,7 +21,7 @@ Parameters:
   description: |
     Heartbeat on long running execution
   input_type: checkbox
-  default: true
+  default: false
 - name: CellExecutionStatus.run_queue_length_alert
   description: |
     Say how many cells are running (NOT YET IMPLEMENTED)

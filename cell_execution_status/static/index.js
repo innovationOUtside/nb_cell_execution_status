@@ -20,7 +20,7 @@ define([
     var options = {
         cell_executed_success_alert: false,
         cell_executed_error_alert: false,
-        heartbeat: true
+        heartbeat: false
     };
 
     var context = new AudioContext();
