@@ -1,1 +1,4 @@
 jupyter nbextensions_configurator enable --user
+
+jupyter nbextension install cell_execution_status --user
+jupyter nbextension enable cell_execution_status/index
