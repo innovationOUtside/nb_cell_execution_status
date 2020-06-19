@@ -56,7 +56,6 @@ define([
         if (!(options.heartbeat)) return
         console.log('...pulse...')
         clearTimeout(heartbeat_timer);
-        //if (parseInt(document.getElementById('audio_heartbeat').value)>0)
         if (running_cell_count>0) {
             console.log('timer_running')
             heartbeat_timer = setTimeout(function () { heartbeat_pulse(); }, pulse);
@@ -89,11 +88,6 @@ define([
                 cell.element.addClass('cell-status-error');
                 if (options.heartbeat) {
                     running_cell_count = running_cell_count - 1;
-                    var _h = document.getElementById('audio_heartbeat');
-                    _h.value = parseInt(_h.value) - 1;
-                    console.log('broke; count now at', _h.value )
-                    var event = new Event('change');
-                    audio_heartbeat.dispatchEvent(event);
                 }
                 if (options.cell_executed_error_alert) {
                     feedback_tone(220, 'sawtooth');
@@ -103,11 +97,6 @@ define([
                 if (options.heartbeat) {
                     running_cell_count = running_cell_count - 1;
                     clearTimeout(heartbeat_timer);
-                    var _h = document.getElementById('audio_heartbeat');
-                    _h.value = parseInt(_h.value) - 1;
-                    console.log('success; count now at', _h.value )
-                    var event = new Event('change');
-                    audio_heartbeat.dispatchEvent(event);
                 }
                 if (options.cell_executed_success_alert) {
                     feedback_tone(440, 'triangle');
@@ -162,12 +151,8 @@ define([
         var previous_get_callbacks = codecell.CodeCell.prototype.get_callbacks;
 
         codecell.CodeCell.prototype.get_callbacks = function () {
-            var audio_heartbeat = document.getElementById("audio_heartbeat");
-            audio_heartbeat.value = parseInt(audio_heartbeat.value) + 1;
             running_cell_count = running_cell_count + 1;
             audio_pulse();
-            var event = new Event('change');
-            audio_heartbeat.dispatchEvent(event);
 
             var that = this;
             var callbacks = previous_get_callbacks.apply(this, arguments);
@@ -206,14 +191,7 @@ define([
         Jupyter.toolbar.add_buttons_group(buttons);
     }
 
-    var cell_execution_status = function () {
-        var audio_heartbeat = document.createElement("input");
-        audio_heartbeat.id = "audio_heartbeat";
-        audio_heartbeat.setAttribute("type", "hidden");
-        //audio_heartbeat.onchange = audio_pulse;
-        audio_heartbeat.value = 0;
-        document.body.appendChild(audio_heartbeat);
-
+    var cell_execution_status = function () {  
         load_extension();
         register_toolbar_buttons();
         patch_CodeCell_get_callbacks();
