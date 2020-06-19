@@ -22,6 +22,13 @@ Parameters:
     Heartbeat on long running execution
   input_type: checkbox
   default: false
+- name: CellExecutionStatus.heartbeat_delay_in_s
+  description: |
+    Heartbeat period (s)
+  input_type: number
+  default: 5
+  step: 1
+  min: 1
 - name: CellExecutionStatus.run_queue_length_alert
   description: |
     Say how many cells are running (NOT YET IMPLEMENTED)

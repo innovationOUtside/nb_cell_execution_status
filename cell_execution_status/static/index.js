@@ -20,18 +20,18 @@ define([
     var options = {
         cell_executed_success_alert: false,
         cell_executed_error_alert: false,
-        heartbeat: false
+        heartbeat: false,
+        heartbeat_delay_in_s: 5
     };
 
     var context = new AudioContext();
     var heartbeat = new AudioContext();
+    var pulse = 1000 * options.heartbeat_delay_in_s;
     var o = null;
     var g = null;
     var running_cell_count = 0;
     var heartbeat_timer = '';
-    var pulse = 5; //in seconds
-    pulse = pulse * 1000;
-
+    
     //hearbeat: feedback_click('sine', 0.005)
     function feedback_click(type, duration_s) {
         o = heartbeat.createOscillator()
@@ -120,8 +120,6 @@ define([
     function extend_cell(cell) {
         extend_prompt(cell, cell.output_area);
     }
-
-
 
     function extend_prompt(cell, output_area) {
         $('<div/>')
@@ -262,6 +260,7 @@ define([
 
         Jupyter.notebook.config.loaded.then(function on_config_loaded() {
             $.extend(true, options, Jupyter.notebook.config.data[mod_name]);
+            pulse = 1000 * options.heartbeat_delay_in_s; //in seconds
         }, function on_config_load_error(reason) {
             console.warn(log_prefix, 'Using defaults after error loading config:', reason);
         }).then(function do_stuff_with_config() {
