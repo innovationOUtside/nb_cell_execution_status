@@ -19,12 +19,50 @@ define([
     // defaults, overridden by server's config
     var options = {
         cell_executed_success_alert: false,
-        cell_executed_error_alert: false
+        cell_executed_error_alert: false,
+        heartbeat: true
     };
 
-    var context = new AudioContext()
+    var context = new AudioContext();
+    var heartbeat = new AudioContext();
     var o = null;
     var g = null;
+    var running_cell_count = 0;
+    var heartbeat_timer = '';
+    var pulse = 5; //in seconds
+    pulse = pulse * 1000;
+
+    //hearbeat: feedback_click('sine', 0.005)
+    function feedback_click(type, duration_s) {
+        o = heartbeat.createOscillator()
+        g = heartbeat.createGain()
+        o.connect(g)
+        o.type = type
+        g.connect(heartbeat.destination)
+        o.start(0)
+        g.gain.exponentialRampToValueAtTime(0.00001, heartbeat.currentTime + duration_s)
+    }
+
+    function heartbeat_pulse(){
+        console.log('hb1',running_cell_count)
+        if (running_cell_count<=0) return;
+        console.log('tick...(cell running)');
+        feedback_click('sine', 0.005);
+        audio_pulse();
+    }
+
+    function audio_pulse(){
+        console.log('pulse...')
+        if (!(options.heartbeat)) return
+        console.log('...pulse...')
+        clearTimeout(heartbeat_timer);
+        //if (parseInt(document.getElementById('audio_heartbeat').value)>0)
+        if (running_cell_count>0) {
+            console.log('timer_running')
+            heartbeat_timer = setTimeout(function () { heartbeat_pulse(); }, pulse);
+        }
+    }
+
     function feedback_tone(frequency, type) {
         o = context.createOscillator()
         g = context.createGain()
@@ -43,20 +81,40 @@ define([
         cell.element.removeClass('cell-status-success');
         cell.element.removeClass('cell-status-error');
         cell.element.removeClass('cell-status-inqueue');
-
         if (first == true) {
             cell.element.addClass('cell-status-inqueue');
+            console.log('inq')
         } else {
             if (msg.content.status != "ok" && msg.content.status != "aborted") {
                 cell.element.addClass('cell-status-error');
-                if (options.cell_executed_error_alert)
+                if (options.heartbeat) {
+                    running_cell_count = running_cell_count - 1;
+                    var _h = document.getElementById('audio_heartbeat');
+                    _h.value = parseInt(_h.value) - 1;
+                    console.log('broke; count now at', _h.value )
+                    var event = new Event('change');
+                    audio_heartbeat.dispatchEvent(event);
+                }
+                if (options.cell_executed_error_alert) {
                     feedback_tone(220, 'sawtooth');
+                }
             } else if (msg.content.status != "aborted") {
                 cell.element.addClass('cell-status-success');
-                if (options.cell_executed_success_alert)
+                if (options.heartbeat) {
+                    running_cell_count = running_cell_count - 1;
+                    clearTimeout(heartbeat_timer);
+                    var _h = document.getElementById('audio_heartbeat');
+                    _h.value = parseInt(_h.value) - 1;
+                    console.log('success; count now at', _h.value )
+                    var event = new Event('change');
+                    audio_heartbeat.dispatchEvent(event);
+                }
+                if (options.cell_executed_success_alert) {
                     feedback_tone(440, 'triangle');
+                }
             }
         }
+        audio_pulse();
     }
 
 
@@ -102,7 +160,15 @@ define([
     function patch_CodeCell_get_callbacks() {
         console.log('[cell_execution_status] patching CodeCell.prototype.get_callbacks');
         var previous_get_callbacks = codecell.CodeCell.prototype.get_callbacks;
+
         codecell.CodeCell.prototype.get_callbacks = function () {
+            var audio_heartbeat = document.getElementById("audio_heartbeat");
+            audio_heartbeat.value = parseInt(audio_heartbeat.value) + 1;
+            running_cell_count = running_cell_count + 1;
+            audio_pulse();
+            var event = new Event('change');
+            audio_heartbeat.dispatchEvent(event);
+
             var that = this;
             var callbacks = previous_get_callbacks.apply(this, arguments);
             var prev_iopub_output_callback = callbacks.iopub.output;
@@ -141,6 +207,13 @@ define([
     }
 
     var cell_execution_status = function () {
+        var audio_heartbeat = document.createElement("input");
+        audio_heartbeat.id = "audio_heartbeat";
+        audio_heartbeat.setAttribute("type", "hidden");
+        //audio_heartbeat.onchange = audio_pulse;
+        audio_heartbeat.value = 0;
+        document.body.appendChild(audio_heartbeat);
+
         load_extension();
         register_toolbar_buttons();
         patch_CodeCell_get_callbacks();

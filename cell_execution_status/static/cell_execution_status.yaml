@@ -17,6 +17,11 @@ Parameters:
     Audible alert of unsuccessful cell execution completion status
   input_type: checkbox
   default: false
+- name: CellExecutionStatus.heartbeat
+  description: |
+    Heartbeat on long running execution
+  input_type: checkbox
+  default: true
 - name: CellExecutionStatus.run_queue_length_alert
   description: |
     Say how many cells are running (NOT YET IMPLEMENTED)
