@@ -1,0 +1,48 @@
+.output_wrapper .out_prompt_bg {
+    padding: 0px 0.4em;
+    position: absolute;
+    border-radius: 2px;
+    z-index: -1;
+}
+
+.cell-status-success .input_prompt {
+    background-color: #bcffbc;
+    height: 100%;
+}
+
+.cell-status-success .multi-output-tabs .out_prompt_bg {
+    background-color: #bcffbc;
+}
+
+.cell-status-success .output_wrapper .out_prompt_bg {
+    background-color: #bcffbc;
+    height: 100%;
+}
+
+.cell-status-error .input_prompt {
+    background-color: #ffc0cb;
+    height: 100%;
+}
+
+.cell-status-error .multi-output-tabs .out_prompt_bg {
+    background-color: #ffc0cb;
+}
+
+.cell-status-error .output_wrapper .out_prompt_bg {
+    background-color: #ffc0cb;
+    height: 100%;
+}
+
+.cell-status-inqueue .input_prompt {
+    background-color: #e0ffff;
+    height: 100%;
+}
+
+.cell-status-inqueue .multi-output-tabs .out_prompt_bg {
+    background-color: #e0ffff;
+}
+
+.cell-status-inqueue .output_wrapper .out_prompt_bg {
+    background-color: #e0ffff;
+    height: 100%;
+}

@@ -1,0 +1,5 @@
+{
+    "load_extensions": {
+        "cell_execution_status/index": true
+    }
+}
