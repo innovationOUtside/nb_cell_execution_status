@@ -128,9 +128,6 @@ define([
             .appendTo(output_area.wrapper);
     }
 
-
-
-
     /* Load additional CSS */
     var load_css = function (name) {
         var link = document.createElement("link");
@@ -166,14 +163,6 @@ define([
         };
     }
 
-    function patch_CodeCell_clear_output() {
-        console.log('[cell_execution_status] patching CodeCell.prototype.clear_output');
-        var previous_clear_output = codecell.CodeCell.prototype.clear_output;
-        codecell.CodeCell.prototype.clear_output = function (wait) {
-            previous_clear_output.apply(this, arguments);
-        }
-    }
-
     function patch_CodeCell_handle_execute_reply() {
         console.log('[cell_execution_status] patching CodeCell.prototype._handle_execute_reply');
         var previous_handle_execute_reply = codecell.CodeCell.prototype._handle_execute_reply;
@@ -193,8 +182,7 @@ define([
         load_extension();
         register_toolbar_buttons();
         patch_CodeCell_get_callbacks();
-        patch_CodeCell_clear_output();
-        patch_CodeCell_handle_execute_reply();
+        patch_CodeCell_handle_execute_reply();        
 
         var original_codecell_execute = codecell.CodeCell.prototype.execute;
         codecell.CodeCell.prototype.execute = function (stop_on_error) {
@@ -213,20 +201,6 @@ define([
                 stop_on_error = true;
             }
 
-            this.clear_output(false, true);
-            var old_msg_id = this.last_msg_id;
-            if (old_msg_id) {
-                this.kernel.clear_callbacks_for_msg(old_msg_id);
-                delete codecell.CodeCell.msg_cells[old_msg_id];
-                this.last_msg_id = null;
-            }
-            if (this.get_text().trim().length === 0) {
-                // nothing to do
-                this.set_input_prompt(null);
-                return;
-            }
-
-            var output_json = this.output_area.outputs[this.output_area.outputs.length - 1];
             this.set_input_prompt('*');
             this.element.addClass("running");
 
@@ -234,11 +208,7 @@ define([
 
             var callbacks = this.get_callbacks();
 
-            var options = { silent: false, store_history: true, stop_on_error: stop_on_error };
-            var data = {
-   
-            };
-            $.extend(true, options, data);
+            var options = { stop_on_error: stop_on_error };
 
             this.last_msg_id = this.kernel.execute(this.get_text(), callbacks, options);
             codecell.CodeCell.msg_cells[this.last_msg_id] = this;
