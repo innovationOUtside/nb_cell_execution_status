@@ -22,6 +22,7 @@ Audible feedback for successful and unsuccessful cell completion can also be ena
 
 ![](.images/cell-execution_config.png)
 
+There is also an optional heartbeat pulse (default period 5s; configurable) that can be used to indicate the continuning run status of long running cells.
 
 ## Installation
 
