@@ -3,7 +3,7 @@ Indicators relating to cell execution status
 
 
 
-[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/innovationOUtside/nb_extension_empinken/master)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/innovationOUtside/nb_cell_execution_status/master)
 
 
 Use colour to display cell execution status of notebook code cells:
