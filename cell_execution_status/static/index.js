@@ -208,7 +208,7 @@ define([
 
             var callbacks = this.get_callbacks();
 
-            var options = { stop_on_error: stop_on_error };
+            var options = {silent: false, store_history: true, stop_on_error: stop_on_error };
 
             this.last_msg_id = this.kernel.execute(this.get_text(), callbacks, options);
             codecell.CodeCell.msg_cells[this.last_msg_id] = this;
