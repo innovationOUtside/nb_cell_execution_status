@@ -31,6 +31,6 @@ Parameters:
   min: 1
 - name: CellExecutionStatus.run_queue_length_alert
   description: |
-    Say how many cells are running (NOT YET IMPLEMENTED)
+    Say how many cells are running
   input_type: checkbox
   default: false

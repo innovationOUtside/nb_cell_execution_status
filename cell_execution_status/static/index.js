@@ -21,7 +21,8 @@ define([
         cell_executed_success_alert: false,
         cell_executed_error_alert: false,
         heartbeat: false,
-        heartbeat_delay_in_s: 5
+        heartbeat_delay_in_s: 5,
+        run_queue_length_alert: false
     };
 
     var context = new AudioContext();
@@ -87,11 +88,17 @@ define([
             if (msg.content.status != "ok" && msg.content.status != "aborted") {
                 cell.element.addClass('cell-status-error');
                 if (options.heartbeat) {
-                    running_cell_count = running_cell_count - 1;
+                    running_cell_count = 0;
                 }
                 if (options.cell_executed_error_alert) {
                     feedback_tone(220, 'sawtooth');
                 }
+                if (options.run_queue_length_alert) {
+                    var synth = window.speechSynthesis;
+                    var say = new SpeechSynthesisUtterance('Broke on'+ msg.content.execution_count.toString());
+                    synth.speak(say);
+                }
+                
             } else if (msg.content.status != "aborted") {
                 cell.element.addClass('cell-status-success');
                 if (options.heartbeat) {
