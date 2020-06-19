@@ -39,8 +39,3 @@ jupyter nbextension uninstall cell_execution_status
 jupyter nbextension install cell_execution_status --user
 jupyter nbextension enable cell_execution_status/index
 ```
-
-
-# License
-
-This project is licensed under the terms of the Modified BSD License (also known as New or Revised or 3-Clause BSD), see LICENSE.txt.
