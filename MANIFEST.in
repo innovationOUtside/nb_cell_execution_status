@@ -1,1 +1,2 @@
-include nb_cell_execution_status/static/*
+recursive-include jupyter-config *.json
+recursive-include cell_execution_status/static/*
