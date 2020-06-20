@@ -215,9 +215,20 @@ define([
             if (stop_on_error === undefined) {
                 stop_on_error = true;
             }
-            
-            this.clear_output(false, true);
 
+            this.clear_output(false, true);
+            var old_msg_id = this.last_msg_id;
+            if (old_msg_id) {
+                this.kernel.clear_callbacks_for_msg(old_msg_id);
+                delete codecell.CodeCell.msg_cells[old_msg_id];
+                this.last_msg_id = null;
+            }
+            if (this.get_text().trim().length === 0) {
+                // nothing to do
+                this.set_input_prompt(null);
+                return;
+            }
+            
             this.set_input_prompt('*');
             this.element.addClass("running");
 
