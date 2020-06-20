@@ -89,6 +89,7 @@ define([
                 cell.element.addClass('cell-status-error');
                 if (options.heartbeat) {
                     running_cell_count = 0;
+                    clearTimeout(heartbeat_timer);
                 }
                 if (options.cell_executed_error_alert) {
                     feedback_tone(220, 'sawtooth');
@@ -169,7 +170,14 @@ define([
             return callbacks;
         };
     }
-
+    function patch_CodeCell_clear_output() {
+        console.log('[multi_outputs] patching CodeCell.prototype.clear_output');
+        var previous_clear_output = codecell.CodeCell.prototype.clear_output;
+        codecell.CodeCell.prototype.clear_output = function(wait) {
+            previous_clear_output.apply(this, arguments);
+            update_pin_button_status(this.output_area);
+        }
+    }
     function patch_CodeCell_handle_execute_reply() {
         console.log('[cell_execution_status] patching CodeCell.prototype._handle_execute_reply');
         var previous_handle_execute_reply = codecell.CodeCell.prototype._handle_execute_reply;
@@ -189,6 +197,7 @@ define([
         load_extension();
         register_toolbar_buttons();
         patch_CodeCell_get_callbacks();
+        patch_CodeCell_clear_output();
         patch_CodeCell_handle_execute_reply();        
 
         var original_codecell_execute = codecell.CodeCell.prototype.execute;
