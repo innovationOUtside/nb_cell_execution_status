@@ -171,7 +171,7 @@ define([
         };
     }
     function patch_CodeCell_clear_output() {
-        console.log('[multi_outputs] patching CodeCell.prototype.clear_output');
+        console.log('[cell_execution_status] patching CodeCell.prototype.clear_output');
         var previous_clear_output = codecell.CodeCell.prototype.clear_output;
         codecell.CodeCell.prototype.clear_output = function(wait) {
             previous_clear_output.apply(this, arguments);
