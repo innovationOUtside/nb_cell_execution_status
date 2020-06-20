@@ -7,7 +7,7 @@ def _jupyter_nbextension_paths():
     return [dict(section="notebook",
                  src="static",
                  dest="cell_execution_status",
-                 require="empcell_execution_statusinken/index")]
+                 require="cell_execution_status/index")]
 
 def load_jupyter_server_extension(nbapp):
     nbapp.log.info("cell_execution_status enabled!")
