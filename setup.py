@@ -11,11 +11,7 @@ setuptools.setup(
     data_files=[
         # like `jupyter nbextension install --sys-prefix`
         ("share/jupyter/nbextensions/cell_execution_status", [
-            "cell_execution_status/static/index.js",
-             "cell_execution_status/static/cell_execution_status.yaml",
-             "cell_execution_status/static/main.css",
-             "cell_execution_status/static/cell_status.png",
-              "cell_execution_status/static/README.md"
+            "cell_execution_status/static/index.js"
         ]),
         # like `jupyter nbextension enable --sys-prefix`
         ("etc/jupyter/nbconfig/notebook.d", [

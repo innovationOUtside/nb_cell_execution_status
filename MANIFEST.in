@@ -1,2 +1,1 @@
-include nb_cell_execution_status/nbextension/*
-include nb_cell_execution_status/nbextension/lib/*
+include nb_cell_execution_status/static/*
