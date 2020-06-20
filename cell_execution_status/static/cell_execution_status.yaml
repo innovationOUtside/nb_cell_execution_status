@@ -29,8 +29,8 @@ Parameters:
   default: 5
   step: 1
   min: 1
-- name: CellExecutionStatus.run_queue_length_alert
+- name: CellExecutionStatus.inform_error_cell_index
   description: |
-    Say how many cells are running
+    Spoken alert of errored run cell index
   input_type: checkbox
   default: false

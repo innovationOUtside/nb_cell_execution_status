@@ -22,7 +22,7 @@ define([
         cell_executed_error_alert: false,
         heartbeat: false,
         heartbeat_delay_in_s: 5,
-        run_queue_length_alert: false
+        inform_error_cell_index: false
     };
 
     var context = new AudioContext();
@@ -94,7 +94,7 @@ define([
                 if (options.cell_executed_error_alert) {
                     feedback_tone(220, 'sawtooth');
                 }
-                if (options.run_queue_length_alert) {
+                if (options.inform_error_cell_index) {
                     var synth = window.speechSynthesis;
                     var say = new SpeechSynthesisUtterance('Broke on'+ msg.content.execution_count.toString());
                     synth.speak(say);
