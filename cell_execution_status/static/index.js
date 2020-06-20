@@ -216,6 +216,8 @@ define([
             if (stop_on_error === undefined) {
                 stop_on_error = true;
             }
+            
+            this.clear_output(false, true);
 
             this.set_input_prompt('*');
             this.element.addClass("running");
