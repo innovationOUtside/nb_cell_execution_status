@@ -33,3 +33,15 @@ Parameters:
     Spoken alert of errored run cell index
   input_type: checkbox
   default: false
+- name: CellExecutionStatus.all_run_alert
+  description: |
+    Spoken announcement that all cells completed
+  input_type: checkbox
+  default: false
+- name: CellExecutionStatus.all_run_alert_min
+  description: |
+    Minimum number of concurrent cells for all cells completed announcement
+  input_type: number
+  default: 5
+  step: 1
+  min: 1

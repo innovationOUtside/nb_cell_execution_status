@@ -22,16 +22,20 @@ define([
         cell_executed_error_alert: false,
         heartbeat: false,
         heartbeat_delay_in_s: 5,
-        inform_error_cell_index: false
+        inform_error_cell_index: false, 
+        all_run_alert: false, 
+        all_run_alert_min: 5
     };
 
     var context = new AudioContext();
     var heartbeat = new AudioContext();
+    var synth = window.speechSynthesis;
     var pulse = 1000 * options.heartbeat_delay_in_s;
     var o = null;
     var g = null;
     var running_cell_count = 0;
     var heartbeat_timer = '';
+    var all_done_alert = false;
     
     //hearbeat: feedback_click('sine', 0.005)
     function feedback_click(type, duration_s) {
@@ -89,25 +93,31 @@ define([
                 cell.element.addClass('cell-status-error');
                 if (options.heartbeat) {
                     running_cell_count = 0;
+                    all_done_alert = false;
                     clearTimeout(heartbeat_timer);
                 }
                 if (options.cell_executed_error_alert) {
                     feedback_tone(220, 'sawtooth');
                 }
                 if (options.inform_error_cell_index) {
-                    var synth = window.speechSynthesis;
                     var say = new SpeechSynthesisUtterance('Broke on'+ msg.content.execution_count.toString());
                     synth.speak(say);
                 }
                 
             } else if (msg.content.status != "aborted") {
                 cell.element.addClass('cell-status-success');
+                running_cell_count = running_cell_count - 1;
                 if (options.heartbeat) {
-                    running_cell_count = running_cell_count - 1;
                     clearTimeout(heartbeat_timer);
                 }
                 if (options.cell_executed_success_alert) {
                     feedback_tone(440, 'triangle');
+                }
+                console.log(running_cell_count,all_done_alert )
+                if ((running_cell_count<=0) && (all_done_alert)) {
+                    all_done_alert = false;
+                    var say = new SpeechSynthesisUtterance('All finished on'+ msg.content.execution_count.toString());
+                    synth.speak(say);
                 }
             }
         }
@@ -155,6 +165,8 @@ define([
 
         codecell.CodeCell.prototype.get_callbacks = function () {
             running_cell_count = running_cell_count + 1;
+            if ((options.all_run_alert) && (options.all_run_alert_min >= running_cell_count))
+                all_done_alert = true;
             audio_pulse();
 
             var that = this;
