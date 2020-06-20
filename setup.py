@@ -19,7 +19,7 @@ setuptools.setup(
         ]),
         # like `jupyter nbextension enable --sys-prefix`
         ("etc/jupyter/nbconfig/notebook.d", [
-            "jupyter-config/notebook.d/cell_execution_status.json"
+            "jupyter-config/nbconfig/notebook.d/cell_execution_status.json"
         ])
     ],
     zip_safe=False
