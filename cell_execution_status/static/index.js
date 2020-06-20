@@ -175,7 +175,6 @@ define([
         var previous_clear_output = codecell.CodeCell.prototype.clear_output;
         codecell.CodeCell.prototype.clear_output = function(wait) {
             previous_clear_output.apply(this, arguments);
-            update_pin_button_status(this.output_area);
         }
     }
     function patch_CodeCell_handle_execute_reply() {
