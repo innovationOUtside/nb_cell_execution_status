@@ -4,6 +4,7 @@ Section: notebook
 Description: "Cell execution status"
 Link: README.md
 Main: index.js
+Icon: cell_status.png
 Compatibility: 4.x, 5.x
 Parameters:
 - name: CellExecutionStatus.cell_executed_success_alert
