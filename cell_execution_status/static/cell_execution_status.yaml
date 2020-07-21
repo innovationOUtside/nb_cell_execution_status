@@ -7,7 +7,7 @@ Main: index.js
 Compatibility: 4.x, 5.x
 Parameters:
 - name: CellExecutionStatus.colorindicator
-description: |
+  description: |
     Show coloured cell run status indicator
   input_type: checkbox
   default: true
