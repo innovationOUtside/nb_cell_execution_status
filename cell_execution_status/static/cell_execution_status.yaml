@@ -7,6 +7,11 @@ Main: index.js
 Icon: cell_status.png
 Compatibility: 4.x, 5.x
 Parameters:
+- name: CellExecutionStatus.colorindicator
+  description: |
+    Show coloured cell run status indicator
+  input_type: checkbox
+  default: true
 - name: CellExecutionStatus.cell_executed_success_alert
   description: |
     Audible alert of successful cell execution completion status
