@@ -79,6 +79,7 @@ define([
     }
 
     function changeColor(first, cell, msg) {
+        if (!(options.colorindicator)) return
         var outback = cell.output_area.wrapper.find('.out_prompt_bg');
         var inback = $(cell.input[0].firstChild);
 
