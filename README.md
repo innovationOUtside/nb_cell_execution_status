@@ -27,7 +27,7 @@ There is also an optional heartbeat pulse (default period 5s; configurable) that
 
 Install via:
 
-`pip install --upgrade git+https://github.com/https://github.com/innovationOUtside/nb_cell_execution_status.git`
+`pip install --upgrade git+https://github.com/innovationOUtside/nb_cell_execution_status.git`
 
 The extension should be automatically installed and enabled.
 
