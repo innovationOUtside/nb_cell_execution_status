@@ -25,7 +25,7 @@ There is also an optional heartbeat pulse (default period 5s; configurable) that
 
 The [`jupyter-a11y` extension](https://github.com/ouseful-backup/jupyter-a11y/) also includes audible accessibility support eg for navigation, [kernel activity hum](https://github.com/ouseful-backup/jupyter-a11y/blob/4f5a32f4a09a8fd9e872bf179b728d01ad49b81e/nbreader/static/index.js#L92) etc.
 
-## Installation
+## Install
 
 Install via:
 
