@@ -29,7 +29,7 @@ The [`jupyter-a11y` extension](https://github.com/ouseful-backup/jupyter-a11y/) 
 
 Install via:
 
-`pip istall nb_cell_execution_status`
+`pip install nb_cell_execution_status`
 `pip install --upgrade git+https://github.com/innovationOUtside/nb_cell_execution_status.git`
 
 The extension should be automatically installed and enabled.
