@@ -1,0 +1,4 @@
+
+recursive-include jupyter-config *.json
+recursive-include cell_execution_status/static *.js
+include cell_execution_status/static/*.yaml
