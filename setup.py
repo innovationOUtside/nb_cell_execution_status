@@ -17,6 +17,6 @@ setuptools.setup(
             "static/main.css",
             "static/README.md"
          ],
-    }
+    },
     zip_safe=False
 )
