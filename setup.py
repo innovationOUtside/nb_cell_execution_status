@@ -8,7 +8,6 @@ setuptools.setup(
     install_requires=[
         'notebook', 'jupyter_nbextensions_configurator'
     ],
-    include_package_data=True,
     package_data={
         "cell_execution_status": [
              "static/index.js",
