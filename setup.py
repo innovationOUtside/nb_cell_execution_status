@@ -1,7 +1,23 @@
-import setuptools
+from setuptools import setup
 
-setuptools.setup(
+from os import path
+
+def get_long_description():
+    with open(
+        path.join(path.dirname(path.abspath(__file__)), "README.md"),
+        encoding="utf8",
+    ) as fp:
+        return fp.read()
+
+
+setup(
     name="nb_cell_execution_status",
+    url="https://github.com/innovationOUtside/nb_cell_execution_status",
+    author='Tony Hirst',
+    author_email='tony.hirst@open.ac.uk',
+    description='Classic Jupyter notebook cell execution status',
+    long_description=get_long_description(),
+    long_description_content_type="text/markdown",
     packages=['cell_execution_status'],
     version='0.0.4',
     include_package_data=True,
