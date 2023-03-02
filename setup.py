@@ -19,10 +19,10 @@ setup(
     long_description=get_long_description(),
     long_description_content_type="text/markdown",
     packages=['cell_execution_status'],
-    version='0.0.5',
+    version='0.0.6',
     include_package_data=True,
     install_requires=[
-        'notebook', 'jupyter_nbextensions_configurator'
+        'jupyter_nbextensions_configurator'
     ],
     data_files=[
         # like `jupyter nbextension install --sys-prefix`
